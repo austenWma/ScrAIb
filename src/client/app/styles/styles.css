@@ -39,15 +39,22 @@ div.container {
     margin-left: 30%;
     margin-top: 5%;
 }
-.loginInputFields {
-    border-style: solid;
-    border-color: grey;
-    margin-top: 40%;
-    padding-top: 10%;
-    text-align: center;
-    height: 30%;
+.scraibLoginHeaderContainer {
+    height: 15%;
+    text-align: center
 }
-.loginUsernameHeader {
+.scraibLoginHeader {
     font-family: 'Roboto', sans-serif;
-    font-size: 5%;
+    font-size: 50px;
+    font-weight: 100
+}
+.loginInputFields {
+    margin-top: 5%;
+    padding-top: 5%;
+    text-align: center;
+    height: 20%;
+}
+.loginButtonContainer {
+    width: 60%;
+    margin-left: 20%; 
 }
