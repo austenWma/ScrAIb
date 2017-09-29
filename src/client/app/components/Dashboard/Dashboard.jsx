@@ -1,5 +1,8 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+import {Redirect, Link} from 'react-router-dom'
+
+import Login from '../Login/Login.jsx'
 
 import {Navbar, Nav, NavItem, NavDropdown, MenuItem} from 'react-bootstrap'
 
@@ -8,7 +11,7 @@ import Slider from 'material-ui/Slider'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import SwipeableViews from 'react-swipeable-views';
 
-class LandingPage extends Component {
+class DashBoard extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -47,7 +50,7 @@ class LandingPage extends Component {
             </Nav>
             <Nav pullRight>
                 <NavItem eventKey={1} href="#">S I G N U P</NavItem>
-                <NavItem eventKey={2} href="#">L O G I N</NavItem>
+                <NavItem eventKey={2}><Link to="/login" className="loginButton">L O G I N</Link></NavItem>
             </Nav>
             </Navbar.Collapse>
         </Navbar>
@@ -84,7 +87,7 @@ class LandingPage extends Component {
   }
 }
 
-export default LandingPage;
+export default DashBoard;
 
 const styles = {
     headline: {

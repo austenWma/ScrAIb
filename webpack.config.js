@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 var BUILD_DIR = path.resolve(__dirname, 'src/client/public');
 var APP_DIR = path.resolve(__dirname, 'src/client/app');
@@ -8,7 +9,8 @@ var config = {
   entry: APP_DIR + '/index.jsx',
   output: {
     path: BUILD_DIR,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+    publicPath: '/'
   },
 
   module: {
@@ -19,10 +21,13 @@ var config = {
         loader : 'babel-loader'
       }
     ]
+  },
+  devServer: {
+    historyApiFallback: true,
   }
 };
 
-config.module.loaders.push({
+config.module.loaders.push({  
   test: /\.js[x]?$/,
   exclude: /node_modules/,
   loader: 'babel-loader',

@@ -17,3 +17,17 @@ nav.navbar.navbar-inverse {
 div.container {
     width: 100%;
 }
+
+.loginButton {
+    color: white
+}
+
+.loaderContainer {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.loaderParent {
+    text-align: center;
+    margin-top: 5%;
+}

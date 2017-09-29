@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 
-import LandingPage from './LandingPage.jsx'
+import LandingPage from './LandingPage/LandingPage.jsx'
+import Login from './Login/Login.jsx'
 
 class App extends Component {
   constructor (props) {
@@ -12,11 +13,12 @@ class App extends Component {
   render() {
     return (
       <div>
-        <BrowserRouter>
+        <HashRouter>
           <Switch>
             <Route exact path="/" component={LandingPage}/>
+            <Route exact path="/login" component={Login}/>
           </Switch>
-        </BrowserRouter>
+        </HashRouter>
       </div>
     )
   }
