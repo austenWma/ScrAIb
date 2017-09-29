@@ -12,7 +12,7 @@ class Login extends Component {
   constructor (props) {
     super()
     this.state = {
-        loading: false  
+         
     }
   }
 
@@ -34,7 +34,18 @@ class Login extends Component {
     render() {
         return (
             <div>
-                
+                <div className="iconContainer">
+                </div>
+                <div className="loginInputFields">
+                    <TextField
+                        hintText="Email"
+                    />
+                    <br />
+                    <br />
+                    <TextField
+                        hintText="Password"
+                    />
+                </div>
             </div>
         )
     }
