@@ -48,8 +48,16 @@ div.container {
     font-size: 50px;
     font-weight: 100
 }
+.scraibLoginContainer {
+    text-align: center
+}
+.scraibLogin {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    font-weight: 100;
+    color: lightgray;
+}
 .loginInputFields {
-    margin-top: 5%;
     padding-top: 5%;
     text-align: center;
     height: 20%;
@@ -57,4 +65,67 @@ div.container {
 .loginButtonContainer {
     width: 60%;
     margin-left: 20%; 
+}
+.loginSignupContainer {
+    margin-top: 10%;
+    text-align: center;
+}
+
+
+/* SIGNUP PAGE */
+
+.scraibSignupHeaderContainer {
+    height: 7%;
+    text-align: center;
+    margin-top: 5%;
+}
+.scraibSignupHeader {
+    font-family: 'Roboto', sans-serif;
+    font-size: 50px;
+    font-weight: 100
+}
+.scraibSignupLineContainer {
+    text-align: center;
+    margin-bottom: 3%;
+}
+.scraibSignupLine {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    color: lightgray;
+}
+.physicianSignupTab {
+    margin-left: 26%;
+}
+.scraibSignupContainer {
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+.scraibSignup {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    font-weight: 100;
+    color: lightgray;
+}
+.signupInputFields {
+    text-align: center;
+}
+.scraibSignupPersonalHeaderContainer {
+    text-align: center;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+.scraibSignupPersonalHeader {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 100;
+    color: lightgray;
+}
+.signupDropdownContainer {
+    margin-top: 3%;
+}
+.signupButtonContainer {
+    width: 60%;
+    margin-left: 20%; 
+    margin-top: 10%;
 }

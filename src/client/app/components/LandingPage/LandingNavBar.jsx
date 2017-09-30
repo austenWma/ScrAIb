@@ -31,7 +31,7 @@ class LandingNavBar extends Component {
                         </NavDropdown>
                     </Nav>
                     <Nav pullRight>
-                        <NavItem eventKey={1} href="#">S I G N U P</NavItem>
+                        <NavItem eventKey={1} onClick={this.props.handleToggleSignup}>S I G N U P</NavItem>
                         <NavItem eventKey={2} onClick={this.props.handleToggleLogin}>L O G I N</NavItem>
                     </Nav>
                     </Navbar.Collapse>

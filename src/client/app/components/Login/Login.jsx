@@ -40,20 +40,27 @@ class Login extends Component {
                 <div className="scraibLoginHeaderContainer">
                     <div className="scraibLoginHeader">ScrAIb</div>
                 </div>
+                <div className="scraibLoginContainer">
+                    <div className="scraibLogin">Login</div>
+                </div>
                 <div className="loginInputFields">
                     <TextField
                         hintText="Email"
-                        style={{width: '75%'}}
+                        style={{width: '55%'}}
                     />
                     <br />
                     <br />
                     <TextField
                         hintText="Password"
-                        style={{width: '75%'}}
+                        style={{width: '55%'}}
                     />
                 </div>
                 <div className="loginButtonContainer">
                     <RaisedButton label="Log In" fullWidth={true}/>
+                </div>
+                <div className="loginSignupContainer">
+                    <div>Don't have an account with us?</div>
+                    <a>Sign Up</a>
                 </div>
             </div>
         )
