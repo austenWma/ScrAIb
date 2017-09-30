@@ -28,22 +28,23 @@ class PhysicianSignup extends Component {
     this.signUp = this.signUp.bind(this)
   }
 
-    componentWillMount() {
-        firebase.auth().onAuthStateChanged((data) => {
-            if (data) {
-    
-            const uid = data.uid.substring(0, 10)
-            this.props.setUserInfo({
-                email: data.email,
-                uid: uid,
-            })
-            return
-            }
-        });
-    }
-
     signUp() {
-
+        if (this.state.password === this.state.reEnter) {
+            firebaseRef.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+            .then(data => {
+                console.log('successfully created an account', data)
+                firebase.database().ref(`users/${data.uid.substring(0, 10)}`).set({
+                    email: data.email,
+                    uid: data.uid.substring(0, 10),
+                    associated: this.state.associated,
+                    specialty: this.state.specialty,
+                })
+            })
+            .catch(err => {
+                console.log(err.code)
+                console.log(err.message)
+            })
+        }
     }
     handleEmailChange(e) {
         this.setState({
@@ -79,7 +80,7 @@ class PhysicianSignup extends Component {
                 </div>
                 <div className="signupInputFields">
                     <TextField
-                        hintText="Enter your Email here"
+                        hintText="Enter your Email or Username here"
                         style={{width: '55%'}}
                         onChange={this.handleEmailChange}
                     />
