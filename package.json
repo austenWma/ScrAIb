@@ -29,6 +29,7 @@
     "react-spinners": "^0.1.5",
     "react-swipeable-views": "^0.12.8",
     "redux": "^3.7.2",
+    "redux-promise": "^0.5.3",
     "webpack": "^3.6.0"
   },
   "devDependencies": {
