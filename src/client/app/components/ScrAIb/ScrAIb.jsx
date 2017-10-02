@@ -41,7 +41,8 @@ class ScrAIb extends Component {
             // Update the total transcription array
             console.log('INCOMING TRANSCRIPTIONS: ', this.props.transcript, this.state.transcription)
             if (this.props.transcript !== '') {
-                this.state.transcriptionArr.push(this.props.transcript);
+                let capitalized = this.props.transcript[0].toUpperCase()
+                this.state.transcriptionArr.push(capitalized + this.props.transcript.slice(1) + '...');
                 this.forceUpdate();
             }
             this.props.resetTranscript();

@@ -168,3 +168,44 @@ div.container {
     width: 43%;
     height: 100%;
 }
+
+/* SCRAIB RECORD/TRANSCRIPTION LEFT */
+
+.recordTranscriptionContainer {
+    height: 90%;
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 5%;
+}
+.currentTranscriptionContainer {
+    border-style: solid;
+    border-width: thin;
+    height: 12%;
+    border-radius: 15px;
+    font-size: 250%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 2%;
+    text-align: center;
+    overflow-y: scroll;
+}
+.totalTranscriptionContainer {
+    border-style: solid;
+    border-width: thin;
+    border-color: lightgray;
+    height: 80%;
+    width: 92%;
+    margin: 0 auto;
+    margin-top: 4%;
+    font-size: 25px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 100;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 3%;
+}
+.transcriptionItem {
+    margin-top: 20px;
+}

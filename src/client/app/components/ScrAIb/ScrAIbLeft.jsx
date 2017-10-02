@@ -13,10 +13,23 @@ class ScrAIbLeft extends Component {
     };
   }
 
+  componentDidMount() {
+    // Use Jquery for fading in
+  }
+
   render() {
     return (
-      <div>
-        {this.props.transcription}
+      <div className="recordTranscriptionContainer">
+        <div className="currentTranscriptionContainer">
+            <div className="currentTranscription">
+                {this.props.transcription}
+            </div>
+        </div>
+        <div className="totalTranscriptionContainer">
+            {this.props.transcriptionArr.map(transcriptionItem =>
+                <div className="transcriptionItem">{transcriptionItem}</div>
+            )}
+        </div>
       </div>
     )
   }
