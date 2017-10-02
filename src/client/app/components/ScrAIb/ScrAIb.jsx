@@ -1,4 +1,4 @@
-import React, {PropTypes, Component} from 'react'
+import React, {Component} from 'react'
 import {render} from 'react-dom'
 import {Redirect, Link} from 'react-router-dom'
 
@@ -7,10 +7,10 @@ import ScrAIbMiddle from './ScrAIbMiddle.jsx'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
+import PropTypes from 'prop-types';
 import SpeechRecognition from 'react-speech-recognition'
 
 const propTypes = {
-    // Props injected by SpeechRecognition
     transcript: PropTypes.string,
     resetTranscript: PropTypes.func,
     browserSupportsSpeechRecognition: PropTypes.bool
@@ -21,6 +21,7 @@ class ScrAIb extends Component {
     super(props)
     this.state = {
         transcription: '',
+        break: false,
     };
     this.setTranscript = this.setTranscript.bind(this)
   }
@@ -30,12 +31,30 @@ class ScrAIb extends Component {
   }
 
   setTranscript() {
+      // The solution here is that you can use a setinterval to check if there is a pause in the conversation by seeing if the transcript is equal to the previous transcript
     console.log('HERE')
     setInterval(() => {
-        this.setState({
-            transcription: this.props.transcript
-        })
-    }, 200)
+        if (this.props.transcript === (this.state.transcription - '. ')) {
+            console.log('ITS NEVER GETTING HERE')
+            this.setState({
+                break: true
+            })
+        }   else {
+            if (this.state.break) {
+                this.props.resetTranscript();
+                let newTranscription = this.state.transcription + '. '
+                this.setState({
+                    transcription: newTranscription,
+                    break: false,
+                })
+            }   else {
+                let newTranscription = this.state.transcription + this.props.transcript
+                this.setState({
+                    transcription: newTranscription,
+                })
+            }
+        }
+    }, 350)
   }
 
   render() {
