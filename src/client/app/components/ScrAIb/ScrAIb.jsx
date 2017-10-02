@@ -25,6 +25,10 @@ class ScrAIb extends Component {
     this.setTranscript = this.setTranscript.bind(this)
   }
 
+  componentWillMount() {
+      this.props.abortListening();
+  }
+
   setTranscript() {
     console.log('HERE')
     setInterval(() => {
@@ -47,7 +51,7 @@ class ScrAIb extends Component {
                 <ScraibLeft transcription={this.state.transcription}/>
             </div>
             <div className="scraibMiddleContainer">
-                <ScrAIbMiddle setTranscript={this.setTranscript} record={resetTranscript}/>
+                <ScrAIbMiddle setTranscript={this.setTranscript} record={this.props.startListening} stopRecording={this.props.stopListening}/>
             </div>
             <div className="scraibRightContainer">
                 Hello3

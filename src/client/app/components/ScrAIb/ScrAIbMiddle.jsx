@@ -29,6 +29,7 @@ class ScrAIbMiddle extends Component {
   }
 
   stopRecord() {
+    this.props.stopRecording();
     this.setState({
       listening: false
     })
