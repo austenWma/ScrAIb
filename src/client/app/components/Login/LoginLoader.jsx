@@ -11,6 +11,13 @@ class LoginLoader extends Component {
     }
   }
 
+  componentDidMount() {
+      // Here is where we load the user's information into their redux store 
+      setTimeout(() => {
+        this.props.history.push('/physicianDashboard')
+      }, 2000)
+  }
+
     render() {
         return (
             <div className="loaderParent">
