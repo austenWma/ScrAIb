@@ -20,7 +20,6 @@ class ScrAIbMiddle extends Component {
 
   startRecord() {
     this.props.record();
-    this.props.setTranscript();
     setTimeout(() => {
       this.setState({
         listening: true

@@ -21,9 +21,12 @@ class ScrAIb extends Component {
     super(props)
     this.state = {
         transcription: '',
-        break: false,
+        transcriptionArr: [],
+        listening: false
     };
     this.setTranscript = this.setTranscript.bind(this)
+    this.stopTranscript = this.stopTranscript.bind(this)
+    this.startTranscript = this.startTranscript.bind(this)
   }
 
   componentWillMount() {
@@ -32,29 +35,42 @@ class ScrAIb extends Component {
 
   setTranscript() {
       // The solution here is that you can use a setinterval to check if there is a pause in the conversation by seeing if the transcript is equal to the previous transcript
-    console.log('HERE')
-    setInterval(() => {
-        if (this.props.transcript === (this.state.transcription - '. ')) {
-            console.log('ITS NEVER GETTING HERE')
-            this.setState({
-                break: true
-            })
-        }   else {
-            if (this.state.break) {
-                this.props.resetTranscript();
-                let newTranscription = this.state.transcription + '. '
-                this.setState({
-                    transcription: newTranscription,
-                    break: false,
-                })
-            }   else {
-                let newTranscription = this.state.transcription + this.props.transcript
-                this.setState({
-                    transcription: newTranscription,
-                })
+    let transcriptInterval = setInterval(() => {
+        if (this.props.transcript === this.state.transcription && this.props.transcript !== '') {
+            // When its equal to what it originally was, we want to notify INTENT OF BREAK
+            // Update the total transcription array
+            console.log('INCOMING TRANSCRIPTIONS: ', this.props.transcript, this.state.transcription)
+            if (this.props.transcript !== '') {
+                this.state.transcriptionArr.push(this.props.transcript);
+                this.forceUpdate();
             }
+            this.props.resetTranscript();
         }
-    }, 350)
+        // Otherwise, the transcript has changed and we need to update the state
+        this.setState({
+            transcription: this.props.transcript
+        })
+        console.log('TRANSCRIPTION ARR: ', this.state.transcriptionArr)
+
+        if (!this.state.listening) {
+            clearInterval(transcriptInterval);
+        }
+    }, 750)
+  }
+
+  stopTranscript() {
+    this.props.stopListening()
+    this.setState({
+        listening: false
+    })
+  }
+
+  startTranscript() {
+    this.props.startListening()
+    this.setTranscript();
+    this.setState({
+        listening: true
+    })
   }
 
   render() {
@@ -67,10 +83,10 @@ class ScrAIb extends Component {
         return (
         <div className="scraibParentContainer">
             <div className="scraibLeftContainer">
-                <ScraibLeft transcription={this.state.transcription}/>
+                <ScraibLeft transcription={this.state.transcription} transcriptionArr={this.state.transcriptionArr}/>
             </div>
             <div className="scraibMiddleContainer">
-                <ScrAIbMiddle setTranscript={this.setTranscript} record={this.props.startListening} stopRecording={this.props.stopListening}/>
+                <ScrAIbMiddle record={this.startTranscript} stopRecording={this.stopTranscript}/>
             </div>
             <div className="scraibRightContainer">
                 Hello3
