@@ -22,7 +22,8 @@ class ScrAIb extends Component {
     this.state = {
         transcription: '',
         transcriptionArr: [],
-        listening: false
+        listening: false,
+        break: false,
     };
     this.setTranscript = this.setTranscript.bind(this)
     this.stopTranscript = this.stopTranscript.bind(this)
@@ -39,19 +40,21 @@ class ScrAIb extends Component {
         if (this.props.transcript === this.state.transcription && this.props.transcript !== '') {
             // When its equal to what it originally was, we want to notify INTENT OF BREAK
             // Update the total transcription array
-            console.log('INCOMING TRANSCRIPTIONS: ', this.props.transcript, this.state.transcription)
             if (this.props.transcript !== '') {
-                let capitalized = this.props.transcript[0].toUpperCase()
+                let capitalized = this.props.transcript[0].toUpperCase();
                 this.state.transcriptionArr.push(capitalized + this.props.transcript.slice(1) + '...');
-                this.forceUpdate();
+                this.state.break = true
             }
             this.props.resetTranscript();
         }
         // Otherwise, the transcript has changed and we need to update the state
-        this.setState({
-            transcription: this.props.transcript
-        })
-        console.log('TRANSCRIPTION ARR: ', this.state.transcriptionArr)
+        if (this.state.break) {
+            this.state.break = false
+        }   else {
+            this.setState({
+                transcription: this.props.transcript,
+            })
+        }
 
         if (!this.state.listening) {
             clearInterval(transcriptInterval);
@@ -84,7 +87,7 @@ class ScrAIb extends Component {
         return (
         <div className="scraibParentContainer">
             <div className="scraibLeftContainer">
-                <ScraibLeft transcription={this.state.transcription} transcriptionArr={this.state.transcriptionArr}/>
+                <ScraibLeft transcription={this.state.transcription} transcriptionArr={this.state.transcriptionArr} break={this.state.break}/>
             </div>
             <div className="scraibMiddleContainer">
                 <ScrAIbMiddle record={this.startTranscript} stopRecording={this.stopTranscript}/>
