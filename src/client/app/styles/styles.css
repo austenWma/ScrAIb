@@ -223,6 +223,7 @@ div.container {
     width: 97%;
     margin: 0 auto;
     overflow-y: scroll;
+    padding: 3% 5% 0% 5%;
 }
 .formChiefComplaintContainer {
     margin-top: 5%;
@@ -236,13 +237,6 @@ div.container {
 .formPatientTextField {
     margin-left: 3%;
 }
-.formLabel {
-    display: inline-block;
-    font-size: 15px;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 300;
-    margin-top: 5%;
-}
 .formTextField {
-    margin-left: 3%;
+    margin-left: 2%;
 }

@@ -23,10 +23,12 @@ class ScrAIbRight extends Component {
         symptoms: '',
         modifyingFactors: '',
     };
+    this.handleTextChange = this.handleTextChange.bind(this)
   }
 
-  componentDidMount() {
-
+  handleTextChange(event, stateItem) {
+    this.state[stateItem] = event.target.value;
+    this.forceUpdate();
   }
 
   render() {
@@ -37,45 +39,37 @@ class ScrAIbRight extends Component {
                     <div className="patientNameAndDateContainer">
                         <div>
                             <p className="formPatientLabel">Patient Name: </p>
-                            <TextField className="formPatientTextField" hintText="Patient Name" value={this.state.patientName}/>
+                            <TextField className="formPatientTextField" hintText="Patient Name" value={this.state.patientName} onChange={(event) => {this.handleTextChange(event, 'patientName')}}/>
                         </div>
                         <div>
                             <p className="formPatientLabel">Date: </p>
-                            <TextField className="formPatientTextField" hintText="Date" value={this.state.date}/>
+                            <TextField className="formPatientTextField" hintText="Date" value={this.state.date} onChange={(event) => {this.handleTextChange(event, 'date')}}/>
                         </div>
                     </div>
                     <div className="formChiefComplaintContainer">
                         <div>
-                            <p className="formLabel">Chief Complaint: </p>
-                            <TextField className="formTextField" hintText="Chief Complaint" value={this.state.chiefComplaint} multiLine={true}/>
+                            <TextField className="formTextField" floatingLabelText="Chief Complaint" floatingLabelFixed={true} value={this.state.chiefComplaint} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'chiefComplaint')}}/>
                         </div>
                         <div>
-                            <p className="formLabel">Onset/Duration: </p>
-                            <TextField className="formTextField" hintText="Onset and Duration" value={this.state.onsetDuration} multiLine={true}/>
+                            <TextField className="formTextField" floatingLabelText="Onset and Duration" floatingLabelFixed={true} value={this.state.onsetDuration} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'onsetDuration')}}/>
                         </div>
                         <div>
-                            <p className="formLabel">Similar Past Symptoms: </p>
-                            <TextField className="formTextField" hintText="Similar Past Symptoms" value={this.state.similarPast} multiLine={true}/>
+                            <TextField className="formTextField" floatingLabelText="Similar Past Symptoms" floatingLabelFixed={true} value={this.state.similarPast} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'similarPast')}}/>
                         </div>
                         <div>
-                            <p className="formLabel">Timing: </p>
-                            <TextField className="formTextField" hintText="Frequency of Symptoms" value={this.state.timing} multiLine={true}/>
+                            <TextField className="formTextField" floatingLabelText="Frequency of Symptoms" floatingLabelFixed={true} value={this.state.timing} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'timing')}}/>
                         </div>
                         <div>
-                            <p className="formLabel">Severity: </p>
-                            <TextField className="formTextField" hintText="Scale: 1-10" value={this.state.severity} multiLine={true}/>
+                            <TextField className="formTextField" floatingLabelText="Scale: 1-10" floatingLabelFixed={true} value={this.state.severity} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'severity')}}/>
                         </div>
                         <div>
-                            <p className="formLabel">Location: </p>
-                            <TextField className="formTextField" hintText="Location and Radiation" value={this.state.location} multiLine={true}/>
+                            <TextField className="formTextField" floatingLabelText="Location and Radiation" floatingLabelFixed={true} value={this.state.location} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'location')}}/>
                         </div>
                         <div>
-                            <p className="formLabel">Associated Symptoms: </p>
-                            <TextField className="formTextField" hintText="Associated Symptoms" value={this.state.symptoms} multiLine={true}/>
+                            <TextField className="formTextField" floatingLabelText="Associated Symptoms" floatingLabelFixed={true} value={this.state.symptoms} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'symptoms')}}/>
                         </div>
                         <div>
-                            <p className="formLabel">Modifying Factors: </p>
-                            <TextField className="formTextField" hintText="Modifying Factors" value={this.state.modifyingFactors} multiLine={true}/>
+                            <TextField className="formTextField" floatingLabelText="Modifying Factors" floatingLabelFixed={true} value={this.state.modifyingFactors} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'modifyingFactors')}}/>
                         </div>
                     </div>
                 </div>
