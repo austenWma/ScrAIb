@@ -4,6 +4,7 @@ import {Redirect, Link} from 'react-router-dom'
 
 import ScraibLeft from './ScrAIbLeft.jsx'
 import ScrAIbMiddle from './ScrAIbMiddle.jsx'
+import ScrAIbRight from './ScrAIbRight.jsx'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
@@ -93,7 +94,7 @@ class ScrAIb extends Component {
                 <ScrAIbMiddle record={this.startTranscript} stopRecording={this.stopTranscript}/>
             </div>
             <div className="scraibRightContainer">
-                Hello3
+                <ScrAIbRight />
             </div>
         </div>
         )

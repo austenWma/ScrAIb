@@ -150,7 +150,7 @@ div.container {
 }
 .scraibRecordButtonContainer {
     width: 100%;
-    height: 40%;
+    height: 45%;
 }
 .scraibRecordLoader {
     margin-left: 28%;
@@ -208,4 +208,13 @@ div.container {
 }
 .transcriptionItem {
     margin-top: 20px;
+}
+
+/* SCRAIB RECORD/TRANSCRIPTION RIGHT */
+
+.scraibFormContainer {
+    height: 95%;
+    width: 95%;
+    margin: 0 auto;
+    padding: 5% 5% 2% 5%;
 }
