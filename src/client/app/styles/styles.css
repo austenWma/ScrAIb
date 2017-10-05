@@ -218,3 +218,31 @@ div.container {
     margin: 0 auto;
     padding: 5% 5% 2% 5%;
 }
+.scraibFormDataContainer {
+    height: 98%;
+    width: 97%;
+    margin: 0 auto;
+    overflow-y: scroll;
+}
+.formChiefComplaintContainer {
+    margin-top: 5%;
+}
+.formPatientLabel {
+    display: inline-block;
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+}
+.formPatientTextField {
+    margin-left: 3%;
+}
+.formLabel {
+    display: inline-block;
+    font-size: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
+    margin-top: 5%;
+}
+.formTextField {
+    margin-left: 3%;
+}
