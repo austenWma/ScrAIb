@@ -27,7 +27,6 @@ class DashboardNavBar extends Component {
                         <NavDropdown eventKey={1} title="A C C O U N T" id="basic-nav-dropdown">
                         <MenuItem eventKey={1.1}>Your Profile</MenuItem>
                         <MenuItem eventKey={1.2}>Form Templates</MenuItem>
-                        <MenuItem eventKey={1.3}>Action</MenuItem>
                         <MenuItem divider />
                         <MenuItem eventKey={1.3}>Settings</MenuItem>
                         </NavDropdown>

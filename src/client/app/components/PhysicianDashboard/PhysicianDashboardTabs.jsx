@@ -34,7 +34,7 @@ class PhysicianDashboardTabs extends Component {
                             onChange={this.handleChangeTab}
                             value={this.state.slideIndex}
                         >
-                            <Tab label="Recent Records" value={0} />
+                            <Tab label="Records" value={0} />
                             <Tab label="S c r A I b" value={1} />
                             <Tab label="Patients" value={2} />
                         </Tabs>

@@ -3,8 +3,11 @@ import {render} from 'react-dom'
 import {Redirect, Link} from 'react-router-dom'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import Paper from 'material-ui/Paper';
-import TextField from 'material-ui/TextField';
+import Paper from 'material-ui/Paper'
+import TextField from 'material-ui/TextField'
+import Checkbox from 'material-ui/Checkbox' 
+
+import keyword_extractor from "keyword-extractor"
 
 import $ from 'jquery'
 
@@ -22,8 +25,20 @@ class ScrAIbRight extends Component {
         location: '',
         symptoms: '',
         modifyingFactors: '',
+        transcriptionArr: [],
+        checked: false,
+        currentTopic: '',
     };
     this.handleTextChange = this.handleTextChange.bind(this)
+    this.analyzeTranscription = this.analyzeTranscription.bind(this)
+    this.updateCheck = this.updateCheck.bind(this)
+    this.updateCurrentTopic = this.updateCurrentTopic.bind(this)
+  }
+
+  componentDidMount() {
+      this.setState({
+          patientName: 'Austen Ma'
+      })
   }
 
   handleTextChange(event, stateItem) {
@@ -31,7 +46,31 @@ class ScrAIbRight extends Component {
     this.forceUpdate();
   }
 
+  analyzeTranscription(arr) {
+    let sentence = arr[arr.length - 1]
+    let extracted = keyword_extractor.extract(sentence)
+    console.log(extracted)
+    this.state.transcriptionArr = arr;
+  }
+
+  updateCheck() {
+    this.setState((oldState) => {
+      return {
+        checked: !oldState.checked,
+      };
+    });
+  }
+
+  updateCurrentTopic(topic) {
+    console.log(topic)
+    $('.' + this.state.currentTopic + 'Container').animate({borderWidth: '0px'}, 'fast');
+    $('.' + topic + 'Container').animate({borderWidth: '2px'}, 'fast');
+    this.state.currentTopic = topic;
+  }
+
+
   render() {
+    (this.state.transcriptionArr.length < this.props.transcriptionArr.length) ? this.analyzeTranscription(this.props.transcriptionArr) : null;
     return (
         <div className="scraibFormContainer">
             <Paper style={{height: '100%', width: '100%'}} zDepth={2}>
@@ -46,30 +85,38 @@ class ScrAIbRight extends Component {
                             <TextField className="formPatientTextField" hintText="Date" value={this.state.date} onChange={(event) => {this.handleTextChange(event, 'date')}}/>
                         </div>
                     </div>
-                    <div className="formChiefComplaintContainer">
-                        <div>
-                            <TextField className="formTextField" floatingLabelText="Chief Complaint" floatingLabelFixed={true} value={this.state.chiefComplaint} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'chiefComplaint')}}/>
+                    <div className="pinpointCheckboxContainer">
+                        <Checkbox
+                            label="Enable ScrAIb to allow conversation pinpointing (click categories)"
+                            checked={this.state.checked}
+                            onCheck={this.updateCheck.bind(this)}
+                            style={{maxWidth: 800}}
+                        />
+                    </div>
+                    <div className="formChiefComplaintContainer formTextFieldContainer">
+                        <div className="chiefComplaintContainer formTextFieldContainer" onClick={() => {this.updateCurrentTopic('chiefComplaint')}}>
+                            <TextField className="formTextField" floatingLabelText="Chief Complaint" floatingLabelStyle={{color: 'black', fontWeight: '100', fontSize: '20px'}} style={{width: '80%'}} floatingLabelFixed={true} value={this.state.chiefComplaint} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'chiefComplaint')}}/>
                         </div>
-                        <div>
-                            <TextField className="formTextField" floatingLabelText="Onset and Duration" floatingLabelFixed={true} value={this.state.onsetDuration} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'onsetDuration')}}/>
+                        <div className="onsetDurationContainer formTextFieldContainer" onClick={() => {this.updateCurrentTopic('onsetDuration')}}>
+                            <TextField className="formTextField" floatingLabelText="Onset and Duration" floatingLabelStyle={{color: 'black', fontWeight: '100', fontSize: '20px'}} style={{width: '80%'}} floatingLabelFixed={true} value={this.state.onsetDuration} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'onsetDuration')}}/>
                         </div>
-                        <div>
-                            <TextField className="formTextField" floatingLabelText="Similar Past Symptoms" floatingLabelFixed={true} value={this.state.similarPast} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'similarPast')}}/>
+                        <div className="similarPastContainer formTextFieldContainer" onClick={() => {this.updateCurrentTopic('similarPast')}}>
+                            <TextField className="formTextField" floatingLabelText="Similar Past Symptoms" floatingLabelStyle={{color: 'black', fontWeight: '100', fontSize: '20px'}} style={{width: '80%'}} floatingLabelFixed={true} value={this.state.similarPast} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'similarPast')}}/>
                         </div>
-                        <div>
-                            <TextField className="formTextField" floatingLabelText="Frequency of Symptoms" floatingLabelFixed={true} value={this.state.timing} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'timing')}}/>
+                        <div className="timingContainer formTextFieldContainer" onClick={() => {this.updateCurrentTopic('timing')}}>
+                            <TextField className="formTextField" floatingLabelText="Frequency of Symptoms" floatingLabelStyle={{color: 'black', fontWeight: '100', fontSize: '20px'}} style={{width: '80%'}} floatingLabelFixed={true} value={this.state.timing} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'timing')}}/>
                         </div>
-                        <div>
-                            <TextField className="formTextField" floatingLabelText="Scale: 1-10" floatingLabelFixed={true} value={this.state.severity} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'severity')}}/>
+                        <div className="severityContainer formTextFieldContainer" onClick={() => {this.updateCurrentTopic('severity')}}>
+                            <TextField className="formTextField" floatingLabelText="Scale: 1-10" floatingLabelStyle={{color: 'black', fontWeight: '100', fontSize: '20px'}} style={{width: '80%'}} floatingLabelFixed={true} value={this.state.severity} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'severity')}}/>
                         </div>
-                        <div>
-                            <TextField className="formTextField" floatingLabelText="Location and Radiation" floatingLabelFixed={true} value={this.state.location} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'location')}}/>
+                        <div className="locationContainer formTextFieldContainer" onClick={() => {this.updateCurrentTopic('location')}}>
+                            <TextField className="formTextField" floatingLabelText="Location and Radiation" floatingLabelStyle={{color: 'black', fontWeight: '100', fontSize: '20px'}} style={{width: '80%'}} floatingLabelFixed={true} value={this.state.location} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'location')}}/>
                         </div>
-                        <div>
-                            <TextField className="formTextField" floatingLabelText="Associated Symptoms" floatingLabelFixed={true} value={this.state.symptoms} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'symptoms')}}/>
+                        <div className="symptomsContainer formTextFieldContainer" onClick={() => {this.updateCurrentTopic('symptoms')}}>
+                            <TextField className="formTextField" floatingLabelText="Associated Symptoms" floatingLabelStyle={{color: 'black', fontWeight: '100', fontSize: '20px'}} style={{width: '80%'}} floatingLabelFixed={true} value={this.state.symptoms} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'symptoms')}}/>
                         </div>
-                        <div>
-                            <TextField className="formTextField" floatingLabelText="Modifying Factors" floatingLabelFixed={true} value={this.state.modifyingFactors} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'modifyingFactors')}}/>
+                        <div className="modifyingFactorsContainer formTextFieldContainer" onClick={() => {this.updateCurrentTopic('modifyingFactors')}}>
+                            <TextField className="formTextField" floatingLabelText="Modifying Factors" floatingLabelStyle={{color: 'black', fontWeight: '100', fontSize: '20px'}} style={{width: '80%'}} floatingLabelFixed={true} value={this.state.modifyingFactors} multiLine={true} onChange={(event) => {this.handleTextChange(event, 'modifyingFactors')}}/>
                         </div>
                     </div>
                 </div>

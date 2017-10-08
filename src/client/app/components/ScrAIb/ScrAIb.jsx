@@ -60,7 +60,7 @@ class ScrAIb extends Component {
         if (!this.state.listening) {
             clearInterval(transcriptInterval);
         }
-    }, 750)
+    }, 1000)
   }
 
   stopTranscript() {
@@ -94,7 +94,7 @@ class ScrAIb extends Component {
                 <ScrAIbMiddle record={this.startTranscript} stopRecording={this.stopTranscript}/>
             </div>
             <div className="scraibRightContainer">
-                <ScrAIbRight />
+                <ScrAIbRight transcriptionArr={this.state.transcriptionArr}/>
             </div>
         </div>
         )

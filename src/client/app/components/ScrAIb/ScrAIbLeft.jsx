@@ -15,10 +15,6 @@ class ScrAIbLeft extends Component {
     };
   }
 
-  componentDidMount() {
-    
-  }
-
   render() {
     if (this.props.break) {
       // This handles the breaks that mean there is a new transcript arr item, will fade in
