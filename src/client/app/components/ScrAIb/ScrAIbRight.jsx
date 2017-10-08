@@ -25,9 +25,9 @@ class ScrAIbRight extends Component {
         location: '',
         symptoms: '',
         modifyingFactors: '',
-        transcriptionArr: [],
         checked: false,
         currentTopic: '',
+        prevExtracted: '',
     };
     this.handleTextChange = this.handleTextChange.bind(this)
     this.analyzeTranscription = this.analyzeTranscription.bind(this)
@@ -48,9 +48,16 @@ class ScrAIbRight extends Component {
 
   analyzeTranscription(arr) {
     let sentence = arr[arr.length - 1]
-    let extracted = keyword_extractor.extract(sentence)
-    console.log(extracted)
-    this.state.transcriptionArr = arr;
+    let extracted = keyword_extractor.extract(sentence, {
+        language:"english",
+        remove_digits: false,
+        return_changed_case: true,
+        remove_duplicates: false
+    })
+    if (extracted.join(', ') !== this.state.prevExtracted) {
+        this.state[this.state.currentTopic] += extracted.join(', ') + ', '
+        this.state.prevExtracted = extracted.join(', ')
+     }  
   }
 
   updateCheck() {
@@ -62,7 +69,6 @@ class ScrAIbRight extends Component {
   }
 
   updateCurrentTopic(topic) {
-    console.log(topic)
     $('.' + this.state.currentTopic + 'Container').animate({borderWidth: '0px'}, 'fast');
     $('.' + topic + 'Container').animate({borderWidth: '2px'}, 'fast');
     this.state.currentTopic = topic;
@@ -70,7 +76,7 @@ class ScrAIbRight extends Component {
 
 
   render() {
-    (this.state.transcriptionArr.length < this.props.transcriptionArr.length) ? this.analyzeTranscription(this.props.transcriptionArr) : null;
+    this.analyzeTranscription(this.props.transcriptionArr)
     return (
         <div className="scraibFormContainer">
             <Paper style={{height: '100%', width: '100%'}} zDepth={2}>
