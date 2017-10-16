@@ -20,8 +20,7 @@ class DashboardNavBar extends Component {
                     </Navbar.Header>
                     <Navbar.Collapse>
                     <Nav>
-                        <NavItem eventKey={1} href="#">Link</NavItem>
-                        <NavItem eventKey={2} href="#">Link</NavItem>
+                        <NavItem eventKey={1} href="#">Hello Austen</NavItem>
                     </Nav>
                     <Nav pullRight>
                         <NavDropdown eventKey={1} title="A C C O U N T" id="basic-nav-dropdown">

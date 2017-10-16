@@ -7,6 +7,8 @@ import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
 import Checkbox from 'material-ui/Checkbox' 
 
+import * as firebase from 'firebase'
+
 import keyword_extractor from "keyword-extractor"
 
 import $ from 'jquery'
@@ -25,7 +27,7 @@ class ScrAIbRight extends Component {
         location: '',
         symptoms: '',
         modifyingFactors: '',
-        checked: false,
+        checked: true,
         currentTopic: '',
         prevExtracted: '',
     };
@@ -33,6 +35,7 @@ class ScrAIbRight extends Component {
     this.analyzeTranscription = this.analyzeTranscription.bind(this)
     this.updateCheck = this.updateCheck.bind(this)
     this.updateCurrentTopic = this.updateCurrentTopic.bind(this)
+    this.compileInteraction = this.compileInteraction.bind(this)
   }
 
   componentDidMount() {
@@ -74,8 +77,42 @@ class ScrAIbRight extends Component {
     this.state.currentTopic = topic;
   }
 
+  compileInteraction() {
+    let interactionObj = {
+        patient: this.state.patient,
+        date: this.state.date,
+        details: {
+            chiefComplaint: this.state.chiefComplaint,
+            onsetDuration: this.state.onsetDuration,
+            similarPast: this.state.similarPast,
+            timing: this.state.timing,
+            severity: this.state.severity,
+            location: this.state.location,
+            symptoms: this.state.symptoms,
+            modifyingFactors: this.state.modifyingFactors,
+        }
+    }
+    interactionObj = JSON.stringify(interactionObj)
+
+    let filteredDate = this.state.date.split('').filter(char => {
+        return char !== '/' && char !== '-'
+    })
+
+    let key = this.state.patientName + ' ' + filteredDate.join('')
+
+    firebase.database().ref('users/Inoxkh0isa/patients').update({
+        [key]: interactionObj
+    })
+    .then(() => {
+        alert('Changes Saved')
+        this.props.finishedCompiling()
+    })
+  }
 
   render() {
+    if (this.props.compileClicked) {
+        this.compileInteraction()
+    }
     this.analyzeTranscription(this.props.transcriptionArr)
     return (
         <div className="scraibFormContainer">

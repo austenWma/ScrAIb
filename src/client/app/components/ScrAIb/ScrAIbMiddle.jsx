@@ -5,6 +5,7 @@ import {Redirect, Link} from 'react-router-dom'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import IconButton from 'material-ui/IconButton';
 import SettingsVoice from 'material-ui/svg-icons/action/settings-voice';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import { ScaleLoader } from 'react-spinners';
 
@@ -45,6 +46,9 @@ class ScrAIbMiddle extends Component {
                   <IconButton iconStyle={{width: '100%', height: '70%', color: '#78e3fd'}} style={{width: '100%', height: '100%'}} onClick={this.startRecord}>
                       <SettingsVoice />
                   </IconButton>
+              </div>
+              <div className="scraibMiddleBorderContainer">
+                <RaisedButton label="Compile Interaction" primary={true} buttonStyle={{backgroundColor: '#78e3fd'}} onClick={this.props.compileInteraction}/>
               </div>
           </div>
           <div className="scraibMiddleBorderContainer">

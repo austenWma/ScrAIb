@@ -25,10 +25,13 @@ class ScrAIb extends Component {
         transcriptionArr: [],
         listening: false,
         break: false,
+        compileClicked: false,
     };
     this.setTranscript = this.setTranscript.bind(this)
     this.stopTranscript = this.stopTranscript.bind(this)
     this.startTranscript = this.startTranscript.bind(this)
+    this.compileInteraction = this.compileInteraction.bind(this)
+    this.finishedCompiling = this.finishedCompiling.bind(this)
   }
 
   componentWillMount() {
@@ -36,7 +39,7 @@ class ScrAIb extends Component {
   }
 
   setTranscript() {
-      // The solution here is that you can use a setinterval to check if there is a pause in the conversation by seeing if the transcript is equal to the previous transcript
+    // The solution here is that you can use a setinterval to check if there is a pause in the conversation by seeing if the transcript is equal to the previous transcript
     let transcriptInterval = setInterval(() => {
         if (this.props.transcript === this.state.transcription && this.props.transcript !== '') {
             // When its equal to what it originally was, we want to notify INTENT OF BREAK
@@ -78,6 +81,18 @@ class ScrAIb extends Component {
     })
   }
 
+  compileInteraction() {
+    this.setState({
+        compileClicked: true,
+    })
+  }
+
+  finishedCompiling() {
+    this.setState({
+        compileClicked: false,
+    }) 
+  }
+
   render() {
     const { transcript, resetTranscript, browserSupportsSpeechRecognition } = this.props
 
@@ -91,10 +106,10 @@ class ScrAIb extends Component {
                 <ScraibLeft transcription={this.state.transcription} transcriptionArr={this.state.transcriptionArr} break={this.state.break}/>
             </div>
             <div className="scraibMiddleContainer">
-                <ScrAIbMiddle record={this.startTranscript} stopRecording={this.stopTranscript}/>
+                <ScrAIbMiddle record={this.startTranscript} stopRecording={this.stopTranscript} compileInteraction={this.compileInteraction}/>
             </div>
             <div className="scraibRightContainer">
-                <ScrAIbRight transcriptionArr={this.state.transcriptionArr}/>
+                <ScrAIbRight transcriptionArr={this.state.transcriptionArr} compileClicked={this.state.compileClicked} finishedCompiling={this.finishedCompiling}/>
             </div>
         </div>
         )
