@@ -3,6 +3,7 @@ import {render} from 'react-dom'
 import {Redirect, Link} from 'react-router-dom'
 
 import { connect } from 'react-redux'
+import { setRecords } from '../../ReduxActions/setRecords.js'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Paper from 'material-ui/Paper'
@@ -50,7 +51,7 @@ class ScrAIbRight extends Component {
   componentDidMount() {
       setInterval(() => {
           this.forceUpdate()
-      }, 1000)
+      }, 500)
   }
 
   handleTextChange(event, stateItem) {
@@ -109,6 +110,10 @@ class ScrAIbRight extends Component {
     })
 
     let key = this.state.patientName + ' ' + filteredDate.join('')
+
+    this.props.setRecords({
+        records: interactionObj
+    })
 
     firebase.database().ref(`users/${localStorage.getItem('access_token')}/records`).update({
         [key]: interactionObj
@@ -179,4 +184,4 @@ class ScrAIbRight extends Component {
   }
 }
 
-export default connect(mapStateToProps)(ScrAIbRight);
+export default connect(mapStateToProps, { setRecords })(ScrAIbRight);

@@ -17,21 +17,23 @@ const mapStateToProps = (state) => {
 class Records extends Component {
   constructor (props) {
     super(props)
+    this.state = {
+        previousRecordsCount: 0
+    }
   }
 
 componentWillMount() {
-    if (this.props.records.length === 0) {
-        firebase.database().ref(`users/${localStorage.getItem('access_token')}/records`).on('value', (data) => {
-            for (var key in data.val()) {
-                this.props.setRecords({
-                    records: data.val()[key]
-                })
-            }
-        })
-    }
+    firebase.database().ref(`users/${localStorage.getItem('access_token')}/records`).once('value', (data) => {
+        for (var key in data.val()) {
+            this.props.setRecords({
+                records: data.val()[key]
+            })
+        }
+    })
 }
 
     render() {
+        console.log(this.props.records)
         return (
             <div>
                 <div className="recordsContainer">
