@@ -37,6 +37,7 @@ class Login extends Component {
 				this.props.setUserID({
 					userID: data.uid.slice(0,10)
 				})
+				localStorage.setItem('access_token', data.uid.slice(0,10))
                 this.props.history.push('/loginLoader')
             }
         })

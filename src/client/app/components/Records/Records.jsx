@@ -1,29 +1,49 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React, {Component} from 'react'
+import {render} from 'react-dom'
+
+import SingleRecord from './SingleRecord.jsx'
+
+import { connect } from 'react-redux'
+import { setRecords } from '../../ReduxActions/setRecords.js'
 
 import * as firebase from 'firebase'
+
+const mapStateToProps = (state) => {
+    return {
+        records: state.Records.records
+    }
+}
 
 class Records extends Component {
   constructor (props) {
     super(props)
-    this.state = {
-        records: []
+  }
+
+componentWillMount() {
+    if (this.props.records.length === 0) {
+        firebase.database().ref(`users/${localStorage.getItem('access_token')}/records`).on('value', (data) => {
+            for (var key in data.val()) {
+                this.props.setRecords({
+                    records: data.val()[key]
+                })
+            }
+        })
     }
-  }
-
-  componentDidMount() {
-
-  }
-
-
+}
 
     render() {
         return (
             <div>
-                
+                <div className="recordsContainer">
+                    {
+                        this.props.records.map(record => 
+                            <SingleRecord singleRecord={record} />
+                        )
+                    }
+                </div>
             </div>
         )
     }
 }
 
-export default Records;
+export default connect(mapStateToProps, { setRecords })(Records);

@@ -1,31 +1,41 @@
-import React, {Component} from 'react';
-import {render} from 'react-dom';
+import React, {Component} from 'react'
+import {render} from 'react-dom'
 
 import { connect } from 'react-redux'
+import { setRecords } from '../../ReduxActions/setRecords.js'
 
+import * as firebase from 'firebase'
 
-import { BounceLoader } from 'react-spinners';
+import { BounceLoader } from 'react-spinners'
 
 const mapStateToProps = (state) => {
     return {
-        uid: state
+        userID: state.UserID.userID,
+        records: state.Records.records
     }
-  }
+}
 
 class LoginLoader extends Component {
-  constructor (props) {
-    super()
-    this.state = {
-        loading: true  
+    constructor (props) {
+        super()
+        this.state = {
+            loading: true  
+        }
     }
-  }
 
   componentDidMount() {
-      // Here is where we load the user's information into their redux store 
-      console.log(this.props.uid)
-      setTimeout(() => {
-        this.props.history.push('/physicianDashboard')
-      }, 2000)
+    // Here is where we load the user's information into their redux store 
+
+    firebase.database().ref(`users/${this.props.userID}/records`).on('value', (data) => {
+        for (var key in data.val()) {
+            this.props.setRecords({
+                records: data.val()[key]
+            })
+        }
+    })
+    setTimeout(() => {
+    this.props.history.push('/physicianDashboard')
+    }, 2000)
   }
 
     render() {
@@ -43,4 +53,4 @@ class LoginLoader extends Component {
     }
 }
 
-export default connect(mapStateToProps)(LoginLoader);
+export default connect(mapStateToProps, { setRecords })(LoginLoader);

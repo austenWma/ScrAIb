@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {render} from 'react-dom'
 import {Redirect, Link} from 'react-router-dom'
 
+import { connect } from 'react-redux'
+
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import Paper from 'material-ui/Paper'
 import TextField from 'material-ui/TextField'
@@ -12,6 +14,12 @@ import * as firebase from 'firebase'
 import keyword_extractor from "keyword-extractor"
 
 import $ from 'jquery'
+
+const mapStateToProps = (state) => {
+    return {
+        userID: state.UserID.userID
+    }
+}
 
 class ScrAIbRight extends Component {
   constructor (props) {
@@ -39,9 +47,7 @@ class ScrAIbRight extends Component {
   }
 
   componentDidMount() {
-      this.setState({
-          patientName: 'Austen Ma'
-      })
+      console.log(localStorage.getItem('access_token'))
   }
 
   handleTextChange(event, stateItem) {
@@ -79,7 +85,7 @@ class ScrAIbRight extends Component {
 
   compileInteraction() {
     let interactionObj = {
-        patient: this.state.patient,
+        patient: this.state.patientName,
         date: this.state.date,
         details: {
             chiefComplaint: this.state.chiefComplaint,
@@ -100,7 +106,7 @@ class ScrAIbRight extends Component {
 
     let key = this.state.patientName + ' ' + filteredDate.join('')
 
-    firebase.database().ref('users/Inoxkh0isa/patients').update({
+    firebase.database().ref(`users/${localStorage.getItem('access_token')}/records`).update({
         [key]: interactionObj
     })
     .then(() => {
@@ -169,4 +175,4 @@ class ScrAIbRight extends Component {
   }
 }
 
-export default ScrAIbRight;
+export default connect(mapStateToProps)(ScrAIbRight);
