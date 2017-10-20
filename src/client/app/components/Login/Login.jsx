@@ -5,6 +5,9 @@ import {Redirect, Link, withRouter, hashHistory} from 'react-router-dom'
 import { firebaseRef } from '../../../../firebase.js'
 import * as firebase from 'firebase'
 
+import { connect } from 'react-redux'
+import { setUserID } from '../../ReduxActions/setUserID.js'
+
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Dialog from 'material-ui/Dialog';
@@ -31,6 +34,9 @@ class Login extends Component {
         firebaseRef.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(data => {
             if (data) {
+				this.props.setUserID({
+					userID: data.uid.slice(0,10)
+				})
                 this.props.history.push('/loginLoader')
             }
         })
@@ -115,4 +121,4 @@ class Login extends Component {
     }
 }
 
-export default withRouter(Login);
+export default withRouter(connect(null, { setUserID })(Login));

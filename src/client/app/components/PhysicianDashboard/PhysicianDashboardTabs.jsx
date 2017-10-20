@@ -8,6 +8,7 @@ import Drawer from 'material-ui/Drawer'
 import SwipeableViews from 'react-swipeable-views';
 
 import ScrAIb from '../ScrAIb/ScrAIb.jsx'
+import Records from '../Records/Records.jsx'
 
 class PhysicianDashboardTabs extends Component {
     constructor (props) {
@@ -43,8 +44,7 @@ class PhysicianDashboardTabs extends Component {
                             onChangeIndex={this.handleChangeTab}
                         >
                             <div>
-                            <h2 style={styles.headline}>Tabs with slide effect</h2>
-                            Swipe to see the next slide.<br />
+                                <Records />
                             </div>
                             <div style={styles.slide}>
                                 <ScrAIb />

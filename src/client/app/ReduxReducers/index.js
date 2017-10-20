@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import ScrAIbReducer from './scraibReducers.js';
+import { UserID } from './scraibReducers/UserID.js';
 
 const combinedReducers = combineReducers({
-  reducers: ScrAIbReducer
+  UserID
 })
 
 export default combinedReducers;

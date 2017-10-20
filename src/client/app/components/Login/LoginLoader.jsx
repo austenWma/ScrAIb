@@ -1,7 +1,16 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 
+import { connect } from 'react-redux'
+
+
 import { BounceLoader } from 'react-spinners';
+
+const mapStateToProps = (state) => {
+    return {
+        uid: state
+    }
+  }
 
 class LoginLoader extends Component {
   constructor (props) {
@@ -13,6 +22,7 @@ class LoginLoader extends Component {
 
   componentDidMount() {
       // Here is where we load the user's information into their redux store 
+      console.log(this.props.uid)
       setTimeout(() => {
         this.props.history.push('/physicianDashboard')
       }, 2000)
@@ -33,4 +43,4 @@ class LoginLoader extends Component {
     }
 }
 
-export default LoginLoader;
+export default connect(mapStateToProps)(LoginLoader);
