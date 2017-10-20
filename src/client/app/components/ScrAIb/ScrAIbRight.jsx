@@ -46,8 +46,11 @@ class ScrAIbRight extends Component {
     this.compileInteraction = this.compileInteraction.bind(this)
   }
 
+//   Crude fix to a re-rendering issue. Need to go back and refactor so that this interval only fires in tandem with the record button.
   componentDidMount() {
-      console.log(localStorage.getItem('access_token'))
+      setInterval(() => {
+          this.forceUpdate()
+      }, 1000)
   }
 
   handleTextChange(event, stateItem) {
@@ -63,10 +66,11 @@ class ScrAIbRight extends Component {
         return_changed_case: true,
         remove_duplicates: false
     })
+
     if (extracted.join(', ') !== this.state.prevExtracted) {
         this.state[this.state.currentTopic] += extracted.join(', ') + ', '
         this.state.prevExtracted = extracted.join(', ')
-     }  
+    }  
   }
 
   updateCheck() {
@@ -116,10 +120,10 @@ class ScrAIbRight extends Component {
   }
 
   render() {
+    this.analyzeTranscription(this.props.transcriptionArr)
     if (this.props.compileClicked) {
         this.compileInteraction()
     }
-    this.analyzeTranscription(this.props.transcriptionArr)
     return (
         <div className="scraibFormContainer">
             <Paper style={{height: '100%', width: '100%'}} zDepth={2}>
