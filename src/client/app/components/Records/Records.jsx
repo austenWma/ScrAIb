@@ -15,31 +15,38 @@ const mapStateToProps = (state) => {
 }
 
 class Records extends Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-        previousRecordsCount: 0
-    }
-  }
-
-componentWillMount() {
-    firebase.database().ref(`users/${localStorage.getItem('access_token')}/records`).once('value', (data) => {
-        for (var key in data.val()) {
-            this.props.setRecords({
-                records: data.val()[key]
-            })
+    constructor (props) {
+        super(props)
+        this.state = {
+            previousRecordsCount: 0,
+            recordsArr: [],
         }
-    })
-}
+        this.madeChanges = this.madeChanges.bind(this)
+    }
+
+    componentWillMount() {
+        firebase.database().ref(`users/${localStorage.getItem('access_token')}/records`).on('value', (data) => {
+            this.state.recordsArr = []
+            for (var key in data.val()) {
+                this.state.recordsArr.push(data.val()[key])
+            }
+            this.forceUpdate()
+        })  
+    }
+
+    madeChanges() {
+        console.log('UPDATED')
+        this.forceUpdate()
+    }
 
     render() {
-        console.log(this.props.records)
+        console.log(this.state.recordsArr)
         return (
             <div>
                 <div className="recordsContainer">
                     {
-                        this.props.records.map(record => 
-                            <SingleRecord singleRecord={record} />
+                        this.state.recordsArr.map(record => 
+                            <SingleRecord singleRecord={record} madeChanges={this.madeChanges}/>
                         )
                     }
                 </div>

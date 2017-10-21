@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
 
+import * as firebase from 'firebase'
+
 import { Modal, Button } from 'react-bootstrap'
 
 import TextField from 'material-ui/TextField'
@@ -27,22 +29,23 @@ class SingleRecord extends Component {
         this.handleTextChange = this.handleTextChange.bind(this)
         this.modalOpen = this.modalOpen.bind(this)
         this.modalClose = this.modalClose.bind(this)
+        this.modalCloseNoSave = this.modalCloseNoSave.bind(this)
+        this.deleteRecord = this.deleteRecord.bind(this)
     }
 
     componentDidMount() {
         let singleRecordObj = JSON.parse(this.props.singleRecord)
-        console.log('HERE', singleRecordObj)
         this.setState({
             patientName: singleRecordObj.patient,
             date: singleRecordObj.date,
-            chiefComplaint: singleRecordObj.chiefComplaint,
-            onsetDuration: singleRecordObj.onsetDuration,
-            similarPast: singleRecordObj.similarPast,
-            timing: singleRecordObj.timing,
-            severity: singleRecordObj.severity,
-            location: singleRecordObj.location,
-            symptoms: singleRecordObj.symptoms,
-            modifyingFactors: singleRecordObj.modifyingFactors,
+            chiefComplaint: singleRecordObj.details.chiefComplaint,
+            onsetDuration: singleRecordObj.details.onsetDuration,
+            similarPast: singleRecordObj.details.similarPast,
+            timing: singleRecordObj.details.timing,
+            severity: singleRecordObj.details.severity,
+            location: singleRecordObj.details.location,
+            symptoms: singleRecordObj.details.symptoms,
+            modifyingFactors: singleRecordObj.details.modifyingFactors,
         })
     }
 
@@ -50,11 +53,54 @@ class SingleRecord extends Component {
         this.setState({ modalShow: true })
     }
     modalClose() {
+        let interactionObj = {
+            patient: this.state.patientName,
+            date: this.state.date,
+            details: {
+                chiefComplaint: this.state.chiefComplaint,
+                onsetDuration: this.state.onsetDuration,
+                similarPast: this.state.similarPast,
+                timing: this.state.timing,
+                severity: this.state.severity,
+                location: this.state.location,
+                symptoms: this.state.symptoms,
+                modifyingFactors: this.state.modifyingFactors,
+            }
+        }
+        interactionObj = JSON.stringify(interactionObj)
+    
+        let filteredDate = this.state.date.split('').filter(char => {
+            return char !== '/' && char !== '-'
+        })
+    
+        let key = this.state.patientName + ' ' + filteredDate.join('')
+    
+        firebase.database().ref(`users/${localStorage.getItem('access_token')}/records`).update({
+            [key]: interactionObj
+        })
+        .then(() => {
+            this.props.madeChanges()
+        })
+        this.setState({ modalShow: false })
+    }
+    modalCloseNoSave() {
         this.setState({ modalShow: false })
     }
     handleTextChange(event, stateItem) {
         this.state[stateItem] = event.target.value;
         this.forceUpdate();
+    }
+    deleteRecord() {
+        let filteredDate = this.state.date.split('').filter(char => {
+            return char !== '/' && char !== '-'
+        })
+    
+        let key = this.state.patientName + ' ' + filteredDate.join('')
+
+        firebase.database().ref(`users/${localStorage.getItem('access_token')}/records/${key}`).remove()
+        .then(() => {
+            this.props.madeChanges()
+        })
     }
 
     render() {
@@ -74,12 +120,12 @@ class SingleRecord extends Component {
                         <RaisedButton label="View and Edit" primary={true} buttonStyle={{backgroundColor: '#78e3fd', width: '200'}} onClick={this.modalOpen}/>
                     </div>
                     <div>
-                        <RaisedButton label="Delete" primary={true} buttonStyle={{backgroundColor: '#DE5A5A'}}/>
+                        <RaisedButton label="Delete" primary={true} buttonStyle={{backgroundColor: '#DE5A5A'}} onClick={this.deleteRecord}/>
                     </div>
                 </div>
 
                 <Modal bsSize="large" backdrop="static" show={this.state.modalShow}>
-                    <Modal.Header  closeButton={true} onHide={this.modalClose}>
+                    <Modal.Header  closeButton={true} onHide={this.modalCloseNoSave}>
                         <Modal.Title id="contained-modal-title-lg">ScrAIb</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>

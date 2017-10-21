@@ -257,12 +257,12 @@ div.container {
 /* RECORDS */
 
 .recordsContainer {
-    padding: 5% 5% 2.5% 5%
+    padding: 3% 5% 2.5% 5%
 }
 .singleRecordContainer {
     height: 17.5%;
     display: flex;
-    margin-bottom: 3%;
+    margin-bottom: 5%;
 }
 .singleRecordCircle {
     border-style: solid;
