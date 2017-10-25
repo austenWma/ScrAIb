@@ -34,6 +34,7 @@ class SingleRecord extends Component {
     }
 
     componentDidMount() {
+        console.log('REMOUNTING')
         let singleRecordObj = JSON.parse(this.props.singleRecord)
         this.setState({
             patientName: singleRecordObj.patient,

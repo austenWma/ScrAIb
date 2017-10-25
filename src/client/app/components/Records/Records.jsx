@@ -30,7 +30,10 @@ class Records extends Component {
             for (var key in data.val()) {
                 this.state.recordsArr.push(data.val()[key])
             }
-            this.forceUpdate()
+            setTimeout(() => {
+                console.log('FIRING OFF DELAY')
+                this.forceUpdate()
+            }, 500)
         })  
     }
 

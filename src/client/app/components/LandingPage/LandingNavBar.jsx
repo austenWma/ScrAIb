@@ -14,7 +14,7 @@ class LandingNavBar extends Component {
                 <Navbar inverse collapseOnSelect>
                     <Navbar.Header>
                     <Navbar.Brand>
-                        <a href="#">ScrAIb</a>
+                        <a href="#">ScrAIBBBBBBB</a>
                     </Navbar.Brand>
                     <Navbar.Toggle />
                     </Navbar.Header>
